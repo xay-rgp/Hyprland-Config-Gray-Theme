@@ -6,7 +6,7 @@ A gray and black Hyprland desktop setup for Arch Linux, with a Quickshell status
 
 ## Before you run it
 
-**Back up your existing configuration.** The script deletes `~/.config/hypr` and `~/.config/quickshell`, overwrites the Wofi stylesheet, Kitty config, and Fastfetch config, and appends settings to your Fish config. It does not back up these files or provide an uninstall command. Running it again replaces those configurations again.
+**Back up your existing configuration.** The script deletes `~/.config/hypr`, replaces `~/.config/quickshell`, overwrites the Wofi stylesheet, Kitty config, and Fastfetch config, and appends settings to your Fish config. The old Quickshell directory is deleted without a backup; there is no uninstall command. Running it again replaces those configurations again.
 
 You need:
 
@@ -45,7 +45,8 @@ After installation, fully log out and start a new Hyprland session, or reboot. T
    ```text
    hyprland hyprlock hyprpaper discord code flatpak librewolf
    wofi kitty nautilus fastfetch base-devel git go ttf-hack-nerd
-   quickshell pavucontrol fish
+   pavucontrol fish
+   # plus the packages listed in quickshell/packages.txt
    ```
 
 4. Installs `steam` interactively.
@@ -71,7 +72,43 @@ The script stops on a failed command. Changes already made remain in place; ther
 
 These are copies, not symlinks. Edit the installed files to customize your running desktop, or edit the repository files before installation. Keep your changes backed up before rerunning the installer.
 
-Hyprland starts `hyprpaper` and `qs` automatically. The Quickshell bar includes workspaces, a clock, media information, the active window title, audio and brightness controls, system statistics, and a system tray. Its colors are defined in [`quickshell/bar/DefaultTheme.qml`](quickshell/bar/DefaultTheme.qml).
+Hyprland starts `hyprpaper` and the included Quickshell launcher automatically.
+
+### Integrated Quickshell bar
+
+The included bar is the compact monochrome version: 28 px tall, content-sized
+ends with equal padding, a read-only track/artist display on the left, and a
+12-hour clock in the middle. Hover the clock for CPU/GPU/RAM usage; click it
+for local machine and disk stats. The right menu contains network, audio and
+Bluetooth controls. Spotify-specific controls, VPN, notifications, Lights,
+Night Light and a brightness slider are not included. There is no screenshot
+keybinding or screenshot helper.
+
+Colors live in [`quickshell/theme/monochrome.json`](quickshell/theme/monochrome.json).
+The bar requires no separate `~/quickshell-bar` checkout. Hyprland launches
+`~/.config/quickshell/run.sh -d`; the launcher prevents duplicate instances.
+To restart it manually:
+
+```bash
+~/.config/quickshell/run.sh --restart -d
+```
+
+The setup script reads [`quickshell/packages.txt`](quickshell/packages.txt) for
+bar and keyboard-shortcut dependencies: Quickshell, Hack Nerd Font,
+NetworkManager, BlueZ, PipeWire/PipeWire-Pulse, WirePlumber, libpulse, jq,
+Python, util-linux, udisks2, iproute2, gawk, grep, coreutils, procps-ng,
+playerctl and brightnessctl. Qt modules are installed through Quickshell's
+package dependencies. GPU drivers are unchanged. Brightnessctl is for the
+existing hardware keys, not a bar slider.
+
+The installer enables NetworkManager and Bluetooth for subsequent boots,
+without restarting networking in the current session. If another network
+manager is enabled, resolve that conflict before rebooting. Existing
+Quickshell files are deleted and replaced directly, without backups. Other
+installer behavior remains the same, including replacing `~/.config/hypr`.
+
+The bar is adapted from [SaratAngajalaoffl/dotfiles-quickshell](https://github.com/SaratAngajalaoffl/dotfiles-quickshell/tree/1afda74e30d8d9bdb5c19f4dcd583e144d435f1b).
+See [`quickshell/README.md`](quickshell/README.md) for details.
 
 ## Main keyboard shortcuts
 
@@ -94,7 +131,6 @@ Hyprland starts `hyprpaper` and `qs` automatically. The Quickshell bar includes 
 | `Super + Left/Right mouse drag` | Move/resize a floating window |
 | `Super + Shift + C` | Reload Hyprland configuration |
 | `Super + Shift + E` | Exit Hyprland |
-| `Print` | Take a screenshot using `grim` |
 
 The config also defines Vim-style movement keys, media keys, and brightness keys. It assigns both locking and rightward focus to `Super + L/l`; resolve that overlapping binding in `hyprland.lua` before relying on a lock shortcut. You can run `hyprlock` directly.
 
@@ -103,8 +139,8 @@ The config also defines Vim-style movement keys, media keys, and brightness keys
 - **Missing package:** If `pacman` reports a target is unavailable, resolve its repository/package source or adjust `PACMAN_PACKAGES` before rerunning. The earlier system upgrade may already have completed.
 - **Wallpaper missing:** Check the absolute path in the installed `hyprpaper.conf` and confirm the wallpaper exists there.
 - **Displays configured incorrectly:** Adjust the monitor blocks in the installed `hyprland.lua`. From a working Hyprland session, `hyprctl monitors` lists detected outputs.
-- **Media, brightness, or screenshot keys do nothing:** The config calls `pactl`, `playerctl`, `brightnessctl`, and `grim`, but the installer does not explicitly install them. Ensure the commands and their required services/hardware are available.
-- **Incomplete bar statistics:** Network reporting uses `nmcli`, temperature reporting uses `sensors`, and CPU/memory reporting uses `top` and `free`. These commands are not explicitly included in the install list. Network reporting expects NetworkManager; audio controls use PipeWire. Brightness and battery widgets depend on available hardware interfaces.
+- **Media or brightness keys do nothing:** The installer includes `pactl`, `playerctl` and `brightnessctl`. Media applications must support MPRIS; brightness keys require a kernel backlight device.
+- **Incomplete stats or controls:** Network reporting expects NetworkManager, Bluetooth requires BlueZ and hardware, and audio uses PipeWire/WirePlumber. GPU utilization depends on the driver. Disk mount/eject can require a session authentication agent.
 - **Bar missing:** Run `qs` from a terminal inside Hyprland to inspect its output. The included QML configuration requires compatible Quickshell modules.
 - **Graphics or Steam issues:** GPU setup is outside this script's scope. Steam's provider selection does not replace configuring the appropriate graphics and Vulkan drivers for your system.
 

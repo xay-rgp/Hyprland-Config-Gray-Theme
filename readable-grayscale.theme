@@ -1,0 +1,89 @@
+#Bashtop grayscale theme
+#by aristocratos
+
+# Colors should be in 6 or 2 character hexadecimal or single spaced rgb decimal: "#RRGGBB", "#BW" or "0-255 0-255 0-255"
+# example for white: "#FFFFFF", "#ff" or "255 255 255".
+
+# All graphs and meters can be gradients
+# For single color graphs leave "mid" and "end" variable empty.
+# Use "start" and "end" variables for two color gradient
+# Use "start", "mid" and "end" for three color gradient
+
+# Main background, empty for terminal default, need to be empty if you want transparent background
+theme[main_bg]="#00"
+
+# Main text color
+theme[main_fg]="#eeeeee"
+
+# Title color for boxes
+theme[title]="#ffffff"
+
+# Highlight color for keyboard shortcuts
+theme[hi_fg]="#ffffff"
+
+# Background color of selected item in processes box
+theme[selected_bg]="#ff" 
+
+# Foreground color of selected item in processes box
+theme[selected_fg]="#00"
+
+# Color of inactive/disabled text
+theme[inactive_fg]="#888888"
+
+# Misc colors for processes box including mini cpu graphs, details memory graph and details status text
+theme[proc_misc]="#dddddd"
+
+# Cpu box outline color
+theme[cpu_box]="#bbbbbb"
+
+# Memory/disks box outline color
+theme[mem_box]="#bbbbbb"
+
+# Net up/down box outline color
+theme[net_box]="#bbbbbb"
+
+# Processes box outline color
+theme[proc_box]="#bbbbbb"
+
+# Box divider line and small boxes line color
+theme[div_line]="#888888"
+
+# Temperature graph colors
+theme[temp_start]="#aaaaaa"
+theme[temp_mid]=""
+theme[temp_end]="#ff"
+
+# CPU graph colors
+theme[cpu_start]="#aaaaaa"
+theme[cpu_mid]=""
+theme[cpu_end]="#ff"
+
+# Mem/Disk free meter
+theme[free_start]="#aaaaaa"
+theme[free_mid]=""
+theme[free_end]="#ff"
+
+# Mem/Disk cached meter
+theme[cached_start]="#aaaaaa"
+theme[cached_mid]=""
+theme[cached_end]="#ff"
+
+# Mem/Disk available meter
+theme[available_start]="#aaaaaa"
+theme[available_mid]=""
+theme[available_end]="#ff"
+
+# Mem/Disk used meter
+theme[used_start]="#aaaaaa"
+theme[used_mid]=""
+theme[used_end]="#ff"
+
+# Download graph colors
+theme[download_start]="#aaaaaa"
+theme[download_mid]=""
+theme[download_end]="#ff"
+
+# Upload graph colors
+theme[upload_start]="#aaaaaa"
+theme[upload_mid]=""
+theme[upload_end]="#ff"

@@ -14,6 +14,9 @@
 #   ./wofi-style.css
 #   ./kitty.conf
 #   ./fastfetch.jsonc
+#   ./nautilus.css
+#   ./btop.conf
+#   ./readable-grayscale.theme
 #   ./quickshell/            <- whole folder gets copied to ~/.config/quickshell
 #
 # Uses hyprland.lua (not hyprland.conf) — as of Hyprland 0.55+, .conf is
@@ -90,6 +93,8 @@ PACMAN_PACKAGES=(
     kitty
     nautilus
     fastfetch
+    btop
+    rocm-smi-lib # AMD GPU monitoring in btop
     base-devel
     git
     go
@@ -129,13 +134,10 @@ log "Installing kew music player from the AUR..."
 yay -S --needed --noconfirm kew
 
 ### ---------------------------------------------------------------------
-### 5. Flatpak + Mission Center
+### 5. Flatpak remote
 ### ---------------------------------------------------------------------
 log "Setting up flathub remote..."
 sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-
-log "Installing Mission Center from Flathub..."
-sudo flatpak install -y flathub io.missioncenter.MissionCenter
 
 ### ---------------------------------------------------------------------
 ### 6. Deploy dotfiles (flat repo -> proper ~/.config/ subfolders)
@@ -155,7 +157,9 @@ fi
 mkdir -p "$HOME/.config/hypr" \
          "$HOME/.config/wofi" \
          "$HOME/.config/kitty" \
-         "$HOME/.config/fastfetch"
+         "$HOME/.config/fastfetch" \
+         "$HOME/.config/gtk-4.0" \
+         "$HOME/.config/btop/themes"
 
 copy_config() {
     local src="$1" dst="$2"
@@ -193,6 +197,26 @@ copy_config "$SCRIPT_DIR/wofi-style.css"      "$HOME/.config/wofi/style.css"
 copy_config "$SCRIPT_DIR/kitty.conf"          "$HOME/.config/kitty/kitty.conf"
 copy_config "$SCRIPT_DIR/fastfetch.jsonc"     "$HOME/.config/fastfetch/config.jsonc"
 copy_config_dir "$SCRIPT_DIR/quickshell"      "$HOME/.config/quickshell"
+
+# Install the readable grayscale dashboard and show the first GPU by default.
+BTOP_CONFIG="$HOME/.config/btop/btop.conf"
+if [[ -f "$BTOP_CONFIG" ]] && ! cmp -s "$SCRIPT_DIR/btop.conf" "$BTOP_CONFIG"; then
+    cp --backup=numbered -- "$BTOP_CONFIG" "$BTOP_CONFIG.backup"
+    log "  Saved previous btop settings to $BTOP_CONFIG.backup"
+fi
+copy_config "$SCRIPT_DIR/readable-grayscale.theme" "$HOME/.config/btop/themes/readable-grayscale.theme"
+copy_config "$SCRIPT_DIR/btop.conf" "$BTOP_CONFIG"
+
+
+# Save existing GTK styling before installing the Nautilus-only overrides.
+GTK_CSS="$HOME/.config/gtk-4.0/gtk.css"
+if [[ -f "$GTK_CSS" ]] && ! cmp -s "$SCRIPT_DIR/nautilus.css" "$GTK_CSS"; then
+    cp --backup=numbered -- "$GTK_CSS" "$GTK_CSS.backup"
+    log "  Saved previous GTK styling to $GTK_CSS.backup"
+fi
+copy_config "$SCRIPT_DIR/nautilus.css" "$GTK_CSS"
+log "Nautilus translucent black-and-white theme installed. Restart Files to apply it."
+
 
 # Kitty can request maximized state on startup. Ensure the deployed Lua config
 # suppresses that request, even when the repository template lacks the rule.

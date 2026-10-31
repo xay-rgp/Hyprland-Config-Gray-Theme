@@ -45,13 +45,13 @@ After installation, fully log out and start a new Hyprland session, or reboot. T
    ```text
    hyprland hyprlock hyprpaper discord code flatpak librewolf
    wofi kitty nautilus fastfetch base-devel git go ttf-hack-nerd
-   pavucontrol fish
+   pavucontrol fish btop rocm-smi-lib
    # plus the packages listed in quickshell/packages.txt
    ```
 
 4. Installs `steam` interactively.
 5. Builds and installs `yay` from the AUR if it is missing, then installs `kew` through `yay`.
-6. Adds the system-wide Flathub remote and installs Mission Center (`io.missioncenter.MissionCenter`).
+6. Adds the system-wide Flathub remote.
 7. Replaces the desktop configuration files and ensures the deployed Hyprland config includes the Kitty maximize-suppression rule.
 8. Adds Fastfetch to interactive Fish startup, disables the Fish greeting, and changes your login shell to `/usr/bin/fish`.
 
@@ -68,6 +68,9 @@ The script stops on a failed command. Changes already made remain in place; ther
 | `wofi-style.css` | `~/.config/wofi/style.css` |
 | `kitty.conf` | `~/.config/kitty/kitty.conf` |
 | `fastfetch.jsonc` | `~/.config/fastfetch/config.jsonc` |
+| `nautilus.css` | `~/.config/gtk-4.0/gtk.css` |
+| `btop.conf` | `~/.config/btop/btop.conf` |
+| `readable-grayscale.theme` | `~/.config/btop/themes/readable-grayscale.theme` |
 | `quickshell/` | `~/.config/quickshell/` |
 
 These are copies, not symlinks. Edit the installed files to customize your running desktop, or edit the repository files before installation. Keep your changes backed up before rerunning the installer.
@@ -145,3 +148,28 @@ The config also defines Vim-style movement keys, media keys, and brightness keys
 - **Graphics or Steam issues:** GPU setup is outside this script's scope. Steam's provider selection does not replace configuring the appropriate graphics and Vulkan drivers for your system.
 
 The repository contains a personal configuration; installation and runtime compatibility should be checked on your own system.
+
+### Nautilus appearance
+
+Setup installs a translucent black background (75% opacity), white text, and
+white folder/file icons for Nautilus. Text and icons remain opaque. Selected icons become black against white selections; photo thumbnails
+retain their colors. The Open With panel, including its header and search area,
+has an opaque black background with white text. Application icons in that panel
+keep their original colors, and opening it preserves the main window transparency.
+The CSS is scoped to Nautilus windows and its app chooser. Existing GTK CSS is
+saved as `~/.config/gtk-4.0/gtk.css.backup` before replacement (older backups are
+numbered). Fully quit Files with `nautilus -q` and reopen it to apply the theme.
+
+### Terminal system monitor
+
+Setup installs `btop` and `rocm-smi-lib` for AMD GPU monitoring, replacing the
+Mission Center installation. Run `btop` in a terminal. CPU, memory, network,
+processes, and the first detected GPU panel are enabled by default; press `5`
+to toggle the GPU panel. The existing AMD graphics driver is still required.
+This change does not uninstall Mission Center from existing installations.
+
+The custom readable grayscale theme uses bright text, borders, and graphs,
+with process-list fading and usage-based text colors disabled. It uses the
+terminal background. Setup backs up existing btop settings to
+`~/.config/btop/btop.conf.backup` before replacement (older backups are numbered).
+Close btop before setup and reopen it afterward to load the new settings.

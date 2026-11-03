@@ -19,7 +19,7 @@ You need:
 Review these machine-specific settings before installing:
 
 - **Monitors:** [`hyprland.lua`](hyprland.lua) configures `DP-2` at `1920x1080@144` on the left and `DP-1` at `2560x1440@180` on the right. Change the outputs, modes, and positions for your displays.
-- **Wallpaper:** [`hyprpaper.conf`](hyprpaper.conf) uses `/home/xay/.config/hypr/mywallpaper.png`. Replace `/home/xay` with your actual home directory; the installer copies this path unchanged.
+- **Wallpaper:** [`hyprpaper.conf`](hyprpaper.conf) uses `~/.config/hypr/wallpaper.png`. The installer copies the bundled `mywallpaper.png` to this location.
 - **Package availability:** Every package in `PACMAN_PACKAGES`, including `librewolf`, is requested through `pacman`. Check that your configured repositories provide them; the script does not fall back to the AUR for missing packages.
 
 ## Installation
@@ -64,7 +64,7 @@ The script stops on a failed command. Changes already made remain in place; ther
 | `hyprland.lua` | `~/.config/hypr/hyprland.lua` |
 | `hyprlock.conf` | `~/.config/hypr/hyprlock.conf` |
 | `hyprpaper.conf` | `~/.config/hypr/hyprpaper.conf` |
-| `mywallpaper.png` | `~/.config/hypr/mywallpaper.png` |
+| `mywallpaper.png` | `~/.config/hypr/wallpaper.png` |
 | `wofi-style.css` | `~/.config/wofi/style.css` |
 | `kitty.conf` | `~/.config/kitty/kitty.conf` |
 | `fastfetch.jsonc` | `~/.config/fastfetch/config.jsonc` |
@@ -140,7 +140,7 @@ The config also defines Vim-style movement keys, media keys, and brightness keys
 ## Troubleshooting and limitations
 
 - **Missing package:** If `pacman` reports a target is unavailable, resolve its repository/package source or adjust `PACMAN_PACKAGES` before rerunning. The earlier system upgrade may already have completed.
-- **Wallpaper missing:** Check the absolute path in the installed `hyprpaper.conf` and confirm the wallpaper exists there.
+- **Wallpaper missing:** Check the path in the installed `hyprpaper.conf` and confirm the wallpaper exists there.
 - **Displays configured incorrectly:** Adjust the monitor blocks in the installed `hyprland.lua`. From a working Hyprland session, `hyprctl monitors` lists detected outputs.
 - **Media or brightness keys do nothing:** The installer includes `pactl`, `playerctl` and `brightnessctl`. Media applications must support MPRIS; brightness keys require a kernel backlight device.
 - **Incomplete stats or controls:** Network reporting expects NetworkManager, Bluetooth requires BlueZ and hardware, and audio uses PipeWire/WirePlumber. GPU utilization depends on the driver. Disk mount/eject can require a session authentication agent.

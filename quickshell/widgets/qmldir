@@ -15,3 +15,5 @@ AlarmWidget 1.0 AlarmWidget.qml
 AlarmRingingWidget 1.0 AlarmRingingWidget.qml
 PowerWidget 1.0 PowerWidget.qml
 StatsWidget 1.0 StatsWidget.qml
+
+AppearanceWidget 1.0 AppearanceWidget.qml

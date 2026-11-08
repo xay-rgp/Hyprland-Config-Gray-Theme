@@ -78,8 +78,8 @@ QtObject {
 
     // Open the island on `widget`, closing every other popup.
     function openWidget(widget, fromHome) {
-        if (widget !== "stats" && widget !== "home") return
-        widget = "stats"
+        if (widget !== "stats" && widget !== "home" && widget !== "appearance") return
+        if (widget === "home") widget = "stats"
         root.closeAll("island")
         root.islandFromHome = false
         root.islandWidget = widget

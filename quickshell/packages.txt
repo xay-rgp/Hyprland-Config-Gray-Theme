@@ -18,3 +18,5 @@ coreutils
 procps-ng
 playerctl
 brightnessctl
+zenity
+file

@@ -26,6 +26,7 @@ import "../theme"
 import "../state"
 import "../services"
 import "../components"
+import "../widgets"
 import "../modules/Right"
 
 PanelWindow {
@@ -46,8 +47,9 @@ PanelWindow {
 
     // One size for every page, so the panel keeps its shape while you move
     // between them; pages scroll inside it instead of resizing it.
-    readonly property int targetW: Theme.ccWidth
-    readonly property int pageHeight: ShellState.ccPage === "main" ? mainPage.implicitHeight : Theme.ccHeight
+    readonly property int targetW: ShellState.ccPage === "appearance" ? appearancePage.implicitWidth : Theme.ccWidth
+    readonly property int pageHeight: ShellState.ccPage === "appearance" ? appearancePage.implicitHeight
+                                    : ShellState.ccPage === "main" ? mainPage.implicitHeight : Theme.ccHeight
     readonly property int targetH: pageHeight + contentTop
 
     // 0 = the notch, 1 = the page. Open/close eases this.
@@ -242,6 +244,14 @@ PanelWindow {
 
             Page { name: "main"; sub: false
                 ControlCenterMain { id: mainPage; width: parent.width; height: root.pageHeight }
+            }
+            Page { name: "appearance"; sub: false
+                AppearanceWidget {
+                    id: appearancePage
+                    width: parent.width
+                    height: implicitHeight
+                    active: root.open && ShellState.ccPage === "appearance"
+                }
             }
             Page { name: "network"
                 NetworkPopup { width: parent.width; embedded: true }

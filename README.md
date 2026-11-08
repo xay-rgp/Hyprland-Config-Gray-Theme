@@ -173,3 +173,19 @@ with process-list fading and usage-based text colors disabled. It uses the
 terminal background. Setup backs up existing btop settings to
 `~/.config/btop/btop.conf.backup` before replacement (older backups are numbered).
 Close btop before setup and reopen it afterward to load the new settings.
+
+## Update from the Settings menu
+
+Click the gear to the right of the system tray, then **Update desktop from GitHub…**.
+A Kitty terminal fetches `main` from `xay-rgp/Hyprland-Config-Gray-Theme`, merges
+with `--ff-only`, backs up desktop configuration, and runs `setup-hyprland.sh`.
+The terminal stays open for password/package prompts and the final result.
+This runs the full installer, including system package updates and replacement
+of desktop configuration. Log out and back in afterward.
+
+Backups and logs are under `~/.local/state/quickshell/updates/` (or
+`$XDG_STATE_HOME/quickshell/updates/`). Each run records the Git revision and
+local changes. Local repository edits are retained; conflicting or divergent
+updates stop without resetting or stashing them. Resolve those changes before
+trying again. The updater runs from a private snapshot so replacing Quickshell
+cannot delete the running update script.

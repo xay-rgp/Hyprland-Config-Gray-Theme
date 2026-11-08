@@ -135,10 +135,13 @@ log "Installing kew music player from the AUR..."
 yay -S --needed --noconfirm kew
 
 ### ---------------------------------------------------------------------
-### 5. Flatpak remote
+### 5. Flatpak remote and applications
 ### ---------------------------------------------------------------------
 log "Setting up flathub remote..."
 sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+log "Installing Mission Center from Flathub..."
+flatpak install --user --assumeyes flathub io.missioncenter.MissionCenter
 
 ### ---------------------------------------------------------------------
 ### 6. Deploy dotfiles (flat repo -> proper ~/.config/ subfolders)
@@ -272,4 +275,4 @@ else
 fi
 
 log "Done! Fully log out and start Hyprland again (or reboot) — hyprland.lua vs .conf priority is only checked once at startup, so 'hyprctl reload' alone will NOT pick this up."
-warn "Remember: this script did NOT touch your GPU/vulkan driver packages beyond the steam prompt — install lib32-nvidia-utils / lib32-vulkan-radeon / lib32-vulkan-intel yourself if the prompt didn't cover it."
+warn "Remember: this script did NOT touch your GPU/vulkan driver packages beyond the steam prompt — install lib32-nvidia-utils / lib32-vulkan-radeon / lib32-vulkan-intel yourself if the prompt didn't select them."

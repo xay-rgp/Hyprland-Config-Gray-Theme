@@ -29,4 +29,9 @@ Item {
         barWindow: root.barWindow
         active: root.active
     }
+    MediaPopup {
+        barWindow: root.barWindow
+        screen: root.screen
+        active: root.active
+    }
 }

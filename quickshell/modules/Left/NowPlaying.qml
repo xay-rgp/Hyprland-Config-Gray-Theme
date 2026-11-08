@@ -1,6 +1,7 @@
-// Compact, read-only media pill. No playback buttons or pointer handlers.
+// Compact media pill; click to open artwork, progress and transport controls.
 import QtQuick
 import "../../theme"
+import "../../state"
 import "../../services"
 
 Rectangle {
@@ -49,5 +50,12 @@ Rectangle {
         color: MediaService.playing ? Theme.text : Theme.subtext0
         font.family: Theme.fontFamily
         font.pixelSize: Theme.fontSizeSmall
+    }
+    HoverHandler { cursorShape: Qt.PointingHandCursor }
+    TapHandler {
+        onTapped: {
+            if (ShellState.controlCenterOpen && ShellState.ccPage === "media") ShellState.closeAll()
+            else ShellState.showPage("media")
+        }
     }
 }

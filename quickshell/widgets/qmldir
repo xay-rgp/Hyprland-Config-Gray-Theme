@@ -17,3 +17,4 @@ PowerWidget 1.0 PowerWidget.qml
 StatsWidget 1.0 StatsWidget.qml
 
 AppearanceWidget 1.0 AppearanceWidget.qml
+MediaWidget 1.0 MediaWidget.qml

@@ -35,7 +35,7 @@ PanelWindow {
     property var  barWindow: null
     property bool active: false          // this layer's monitor is focused
 
-    readonly property bool open: active && ShellState.controlCenterOpen
+    readonly property bool open: active && ShellState.controlCenterOpen && ShellState.ccPage !== "media"
 
     // ── Geometry ────────────────────────────────────────────────────────────
     readonly property int collapsedW: barWindow ? barWindow.rWidth : Theme.rNotchMinWidth

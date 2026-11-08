@@ -189,3 +189,13 @@ local changes. Local repository edits are retained; conflicting or divergent
 updates stop without resetting or stashing them. Resolve those changes before
 trying again. The updater runs from a private snapshot so replacing Quickshell
 cannot delete the running update script.
+
+## Now Playing popup
+
+Click the bar's Now Playing label to open cover art, track/artist details,
+previous/play-pause/next controls, and a wavy playback timeline. The wave moves
+while playing and flattens when paused. Click or drag the timeline to seek
+when the player supports it. Missing artwork uses a music-note placeholder;
+unsupported controls are disabled. Metadata and controls use MPRIS, so the
+player or browser must expose that interface. The wave illustrates playback,
+not an audio spectrum. Animation stops when the popup is closed.

@@ -1,2 +1,3 @@
 SeamlessBarShape 1.0 SeamlessBarShape.qml
 FrameShape 1.0 FrameShape.qml
+ConcaveFillet 1.0 ConcaveFillet.qml

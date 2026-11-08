@@ -5,3 +5,4 @@ BluetoothPopup 1.0 BluetoothPopup.qml
 LightsPopup 1.0 LightsPopup.qml
 ControlCenter 1.0 ControlCenter.qml
 ControlCenterMain 1.0 ControlCenterMain.qml
+MediaPopup 1.0 MediaPopup.qml

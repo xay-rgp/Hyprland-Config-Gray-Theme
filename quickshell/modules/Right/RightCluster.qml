@@ -29,6 +29,9 @@ Row {
             anchors.verticalCenter: parent.verticalCenter
             glyph: "\uf013"
             size: 24
+            // Keep the full bar height but remove horizontal icon padding.
+            implicitWidth: 16
+            glyphSize: 16
             active: ShellState.controlCenterOpen && ShellState.ccPage === "appearance"
             onActivated: {
                 if (active) ShellState.closeAll()

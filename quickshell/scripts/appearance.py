@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
-"""Persistent appearance and wallpaper actions for the middle bar settings."""
+"""Persistent wallpaper selection for the desktop Settings menu."""
 import argparse
-import json
 import os
 from pathlib import Path
 import re
@@ -10,7 +9,6 @@ import subprocess
 import tempfile
 import time
 
-ROOT = Path(__file__).resolve().parents[1]
 HOME = Path.home()
 
 
@@ -28,21 +26,6 @@ def atomic(path, data):
 
 def run(args):
     return subprocess.run(args, capture_output=True, text=True, check=True, timeout=15)
-
-
-def appearance(mode):
-    assets = ROOT / 'theme/appearance'
-    # Update the desktop preference used by GTK/libadwaita and portals.
-    run(['gsettings', 'set', 'org.gnome.desktop.interface', 'color-scheme',
-         'prefer-dark' if mode == 'dark' else 'prefer-light'])
-    run(['gsettings', 'set', 'org.gnome.desktop.interface', 'gtk-theme',
-         'Adwaita-dark' if mode == 'dark' else 'Adwaita'])
-    css = HOME / '.config/gtk-4.0/gtk.css'
-    backup = css.with_name('gtk.css.before-appearance-menu')
-    if css.exists() and not backup.exists():
-        shutil.copy2(css, backup)
-    atomic(css, (assets / f'gtk-{mode}.css').read_bytes())
-    atomic(ROOT / 'theme/monochrome.json', (assets / f'{mode}.json').read_bytes())
 
 
 def wallpaper():
@@ -93,10 +76,10 @@ def wallpaper():
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('action', choices=['light', 'dark', 'wallpaper'])
-    action = parser.parse_args().action
+    parser.add_argument('action', choices=['wallpaper'])
+    parser.parse_args()
     try:
-        wallpaper() if action == 'wallpaper' else appearance(action)
+        wallpaper()
     except (OSError, ValueError, RuntimeError, subprocess.SubprocessError) as error:
         message = str(error)
         print(message)

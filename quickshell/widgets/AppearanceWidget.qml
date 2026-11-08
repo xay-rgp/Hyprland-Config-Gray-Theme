@@ -26,7 +26,6 @@ Item {
             onStreamFinished: root.message = text.trim()
         }
         onExited: function (code) {
-            Colors.reloadTheme()
             if (code !== 0 && root.message === "") root.message = "Could not apply settings."
         }
     }
@@ -62,40 +61,6 @@ Item {
                 cursorShape: Qt.PointingHandCursor
                 enabled: !worker.running
                 onClicked: root.apply("wallpaper")
-            }
-        }
-        Text {
-            text: "Appearance"
-            color: Theme.subtext0
-            font { family: Theme.fontFamily; pixelSize: Theme.fontSize }
-        }
-        Row {
-            width: parent.width
-            spacing: 12
-            Repeater {
-                model: ["light", "dark"]
-                delegate: Rectangle {
-                    id: choice
-                    required property string modelData
-                    width: (content.width - 12) / 2
-                    height: 82
-                    radius: 10
-                    color: modelData === "light" ? "#eeeeee" : "#161616"
-                    border.width: Theme.mode === modelData ? 3 : 1
-                    border.color: Theme.mode === modelData ? Theme.text : Theme.border
-                    Text {
-                        anchors.centerIn: parent
-                        text: (Theme.mode === choice.modelData ? "✓  " : "") + (choice.modelData === "light" ? "Light" : "Dark")
-                        color: parent.modelData === "light" ? "#111111" : "#ffffff"
-                        font { family: Theme.fontFamily; pixelSize: Theme.fontSize; bold: true }
-                    }
-                    MouseArea {
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                        enabled: !worker.running
-                        onClicked: root.apply(choice.modelData)
-                    }
-                }
             }
         }
         Rectangle {

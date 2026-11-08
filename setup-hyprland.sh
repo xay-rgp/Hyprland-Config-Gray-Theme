@@ -3,6 +3,7 @@
 # Arch Linux setup script for Hyprland-Config dotfiles
 #
 # Bar: uses quickshell (not waybar) for the status bar.
+# Settings gear: wallpaper picker and GitHub desktop updates; no light/dark switch.
 #
 # Expects to be run from the root of the repo, with ALL dotfiles sitting
 # flat next to this script (no subfolders), EXCEPT the quickshell config,
